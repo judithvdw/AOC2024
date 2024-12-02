@@ -20,5 +20,5 @@ def dampening(report):
 with open('inputs/02.txt') as f:
     reports = parse_ints(f.readlines())
 
-print(f"Part 1: {sum([is_valid(diffs(report)) for report in reports])}")
-print(f"Part 2: {sum([dampening(report) for report in reports])}")
+print(f"Part 1: {sum(is_valid(diffs(report)) for report in reports)}")
+print(f"Part 2: {sum(dampening(report) for report in reports)}")

@@ -6,5 +6,5 @@ with open("inputs/01.txt") as f:
 
 left, right = transposed
 counts = Counter(right)
-print(f"Part 1: {sum([abs(l - r) for l, r in zip(sorted(left), sorted(right))])}")
-print(f"Part 2: {sum([l * counts[l] for l in left])}")
+print(f"Part 1: {sum(abs(l - r) for l, r in zip(sorted(left), sorted(right)))}")
+print(f"Part 2: {sum(l * counts[l] for l in left)}")
