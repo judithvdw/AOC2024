@@ -1,7 +1,7 @@
 import re
 
 
-def parse_sparse_grid(lines, character="#"):
+def parse_grid(lines, character="#"):
     d = set()
     for i, line in enumerate(lines):
         for j, num in enumerate(line.strip()):
