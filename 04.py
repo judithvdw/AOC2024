@@ -16,7 +16,7 @@ for x, y in lettersets["X"]:
                 x + (dx * 3), y + (dy * 3)) in lettersets["S"]:
             total += 1
 
-print(total)
+print(f"Part 1: {total}")
 
 # part 2
 total = 0
@@ -32,4 +32,4 @@ for x, y in lettersets["A"]:
     # make sure we have 2 M's and 2 S's and that a letter does not form a diagonal with itself
     if len(ms) == 2 and len(ss) == 2 and not (ms[0][0] + ms[1][0] == 0 and ms[0][1] + ms[1][1] == 0):
         total += 1
-print(total)
+print(f"Part 2: {total}")
