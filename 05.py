@@ -26,7 +26,7 @@ def reorder(rules, update):
     return tuple(ts.static_order())
 
 
-with open("inputs/05test.txt") as f:
+with open("inputs/05.txt") as f:
     rules, updates = (parse_ints(x.split("\n")) for x in f.read().split("\n\n"))
     all_used = set(chain.from_iterable(updates))
 
