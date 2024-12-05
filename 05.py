@@ -23,9 +23,7 @@ def reorder(rules, update):
         if a in update and b in update:
             graph[b].add(a)
     ts = TopologicalSorter(graph)
-    br = tuple(ts.static_order())
-    print(br)
-    return br
+    return tuple(ts.static_order())
 
 
 with open("inputs/05test.txt") as f:
