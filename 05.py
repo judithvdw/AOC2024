@@ -1,6 +1,6 @@
-from collections import defaultdict
-
 from utils.parsing import parse_ints
+
+from collections import defaultdict
 from graphlib import TopologicalSorter
 from itertools import chain
 
@@ -21,15 +21,16 @@ def reorder(rules, update):
     graph = defaultdict(set)
     for a, b in rules:
         if a in update and b in update:
-            graph[a].add(b)
+            graph[b].add(a)
     ts = TopologicalSorter(graph)
-    return tuple(ts.static_order())
+    br = tuple(ts.static_order())
+    print(br)
+    return br
 
 
-with open("inputs/05.txt") as f:
+with open("inputs/05test.txt") as f:
     rules, updates = (parse_ints(x.split("\n")) for x in f.read().split("\n\n"))
     all_used = set(chain.from_iterable(updates))
 
 print(sum(get_middel_num(update) for update in updates if order_ok(rules, update)))
 print(sum(get_middel_num(reorder(rules, update)) for update in updates if not order_ok(rules, update)))
-
