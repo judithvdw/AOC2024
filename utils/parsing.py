@@ -6,7 +6,7 @@ def parse_grid(lines, character="#"):
     for i, line in enumerate(lines):
         for j, num in enumerate(line.strip()):
             if num == character:
-                d.add((i, j))
+                d.add((j, i))
     return d
 
 
