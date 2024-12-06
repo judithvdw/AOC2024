@@ -1,5 +1,29 @@
 from utils.parsing import parse_grid
+from utils.visualisations import print_map
 from itertools import cycle
+from tqdm import tqdm
+
+
+def get_positions_and_directions(start, obstacles, max_y, max_x, loop_detection=False):
+    dx_dy = cycle(((0, -1), (1, 0), (0, 1), (-1, 0)))
+
+    cur_loc = start
+    cur_dir = next(dx_dy)
+    visited = {((cur_loc), cur_dir)}
+
+    while 0 < cur_loc[0] < max_x and 0 < cur_loc[1] < max_y:
+        dx, dy = cur_dir
+        next_loc = cur_loc[0] + dx, cur_loc[1] + dy
+        if next_loc in obstacles:
+            cur_dir = next(dx_dy)
+        else:
+            cur_loc = next_loc
+            if loop_detection:
+                if (cur_loc, cur_dir) in visited:
+                    return False
+        visited.add((cur_loc, cur_dir))
+    return visited
+
 
 with open('inputs/06.txt') as f:
     raw = f.readlines()
@@ -7,18 +31,15 @@ with open('inputs/06.txt') as f:
     obstacles = parse_grid(raw)
 
 max_y, max_x = len(raw), len(raw[0].strip())
-dx_dy = cycle(((-1, 0), (0, 1), (1, 0), (0, -1)))
+pos_and_dr = get_positions_and_directions(start, obstacles, max_y, max_x)
+unique_pos = {loc for loc, dr in pos_and_dr}
+print(f"Part 1: {len(unique_pos) - 1}")  # first loc outside of grid is wrongly added
 
-cur_loc = start
-cur_dir = next(dx_dy)
-visited = set()
-while 0 < cur_loc[0] < max_x and 0 < cur_loc[1] < max_y:
-    dx, dy = cur_dir
-    next_loc = cur_loc[0] + dx, cur_loc[1] + dy
-    if next_loc in obstacles:
-        cur_dir = next(dx_dy)
-    else:
-        cur_loc = next_loc
-        visited.add(cur_loc)
+total = 0
+for x, y in tqdm(unique_pos):
+    obstacles.add((x, y))
+    if not get_positions_and_directions(start, obstacles, max_y, max_x, loop_detection=True):
+        total += 1
+    obstacles.remove((x, y))
 
-print(len(visited)-1)
+print(f"Part 2: {total}")
