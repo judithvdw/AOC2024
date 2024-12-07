@@ -21,5 +21,5 @@ def fixable(answer, components, ops):
 with open('inputs/07.txt') as f:
     values = parse_ints(f.readlines())
 
-print(sum(v[0] for v in values if fixable(v[0], v[1:], (add, mul))))
-print(sum(v[0] for v in values if fixable(v[0], v[1:], (add, mul, concat))))
+print(f"Part 1: {sum(v[0] for v in values if fixable(v[0], v[1:], (add, mul)))}")
+print(f"Part 2: {sum(v[0] for v in values if fixable(v[0], v[1:], (add, mul, concat)))}")

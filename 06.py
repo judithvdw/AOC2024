@@ -1,10 +1,8 @@
 from utils.parsing import parse_grid
-from utils.visualisations import print_map
 from itertools import cycle
-from tqdm import tqdm
 
 
-def get_positions_and_directions(start, obstacles, max_y, max_x, loop_detection=False):
+def run(start, obstacles, max_y, max_x, pt2=False):
     dx_dy = cycle(((0, -1), (1, 0), (0, 1), (-1, 0)))
 
     cur_loc = start
@@ -18,7 +16,7 @@ def get_positions_and_directions(start, obstacles, max_y, max_x, loop_detection=
             cur_dir = next(dx_dy)
         else:
             cur_loc = next_loc
-            if loop_detection:
+            if pt2:
                 if (cur_loc, cur_dir) in visited:
                     return False
         visited.add((cur_loc, cur_dir))
@@ -31,15 +29,8 @@ with open('inputs/06.txt') as f:
     obstacles = parse_grid(raw)
 
 max_y, max_x = len(raw), len(raw[0].strip())
-pos_and_dr = get_positions_and_directions(start, obstacles, max_y, max_x)
+pos_and_dr = run(start, obstacles, max_y, max_x)
 unique_pos = {loc for loc, dr in pos_and_dr}
+
 print(f"Part 1: {len(unique_pos) - 1}")  # first loc outside of grid is wrongly added
-
-total = 0
-for x, y in tqdm(unique_pos):
-    obstacles.add((x, y))
-    if not get_positions_and_directions(start, obstacles, max_y, max_x, loop_detection=True):
-        total += 1
-    obstacles.remove((x, y))
-
-print(f"Part 2: {total}")
+print(f"Part 2: {sum(not run(start, obstacles | {(x, y)}, max_y, max_x, pt2=True) for x, y in unique_pos)}")
