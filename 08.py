@@ -10,7 +10,7 @@ def get_antinodes(antennas, n):
             a_x, a_y = a
             b_x, b_y = b
             x_diff, y_diff = a_x - b_x, a_y - b_y
-            for i in range(n):  # size of the grid
+            for i in range(n): # who needs checks anyways
                 antinodes.add((a_x + (x_diff * i), a_y + (y_diff * i)))
                 antinodes.add((b_x - (x_diff * i), b_y - (y_diff * i)))
     return antinodes
