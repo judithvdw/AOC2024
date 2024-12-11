@@ -25,5 +25,4 @@ def parse_grid_v2(lines, skip="", nums=False):
                     d[int(c)].add((x, y))
                 else:
                     d[c].add((x, y))
-
     return d
