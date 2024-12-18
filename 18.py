@@ -3,7 +3,7 @@ from collections import deque, defaultdict
 from utils.parsing import parse_ints
 
 
-def dfs_shortest_path(graph, start, goal):
+def dfs(grid, start, goal):
     visited = set()
     stack = deque([[start]])
 
@@ -11,33 +11,22 @@ def dfs_shortest_path(graph, start, goal):
         path = stack.popleft()
         node = path[-1]
         if node not in visited:
-            neighbors = graph[node]
+            x,y = node
+            neighbors = {(x+dx, y+dy) for dx, dy in ((0, 1), (1, 0), (0, -1), (-1, 0))}
             for neighbor in neighbors:
-                new_path = path + [neighbor]
-                stack.append(new_path)
-                if neighbor == goal:
-                    return len(new_path) - 1  # steps, not squares
+                if neighbor in grid:
+                    new_path = path + [neighbor]
+                    stack.append(new_path)
+                    if neighbor == goal:
+                        return len(new_path) - 1  # steps, not squares
             visited.add(node)
     return 0
-
-
-def get_adjacency_graph(grid):
-    graph = defaultdict(list)
-    for coord in grid:
-        dx_dy = ((0, 1), (1, 0), (0, -1), (-1, 0))
-        for dx, dy in dx_dy:
-            x, y = coord
-            neighbour = (x + dx, y + dy)
-            if neighbour in grid:
-                graph[coord].append(neighbour)
-    return graph
 
 
 def explore(until, coords, total_grid):
     fallen_bytes = set(coords[:until])
     grid = total_grid - fallen_bytes
-    graph = get_adjacency_graph(grid)
-    return dfs_shortest_path(graph, (0, 0), (SIZE, SIZE))
+    return dfs(grid, (0, 0), (SIZE, SIZE))
 
 
 with open("inputs/18.txt") as f:
