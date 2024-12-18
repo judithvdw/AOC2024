@@ -17,7 +17,6 @@ def dfs_shortest_path(graph, start, goal):
                 stack.append(new_path)
                 if neighbor == goal:
                     return len(new_path) - 1  # steps, not squares
-
             visited.add(node)
     return 0
 
@@ -47,10 +46,16 @@ with open("inputs/18.txt") as f:
 SIZE = 70
 UNTIL = 1024
 total_grid = {(x, y) for x in range(SIZE + 1) for y in range(SIZE + 1)}
-print(explore(UNTIL, coords, total_grid))
+print(f"Part 1: {explore(UNTIL, coords, total_grid)}")
 
-# who has time for binary search
-for i in range(UNTIL, len(coords)):
-    if not explore(i, coords, total_grid):
-        print(coords[i - 1])
-        break
+
+left = UNTIL
+right = len(coords)
+while left < right:
+    mid = (left + right) // 2
+    if explore(mid, coords, total_grid):
+        left = mid + 1
+    else:
+        right = mid
+
+print(f"Part 2: {coords[left - 1][0]},{coords[left - 1][1]}")
