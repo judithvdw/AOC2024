@@ -12,7 +12,7 @@ def possibilities(design, towels):
     return total
 
 
-with open('inputs/20.txt') as f:
+with open('inputs/19.txt') as f:
     a, b = f.read().split('\n\n')
 
 designs = b.split()
