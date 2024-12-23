@@ -1,7 +1,6 @@
-from itertools import pairwise, chain
+from itertools import pairwise
 from more_itertools import windowed
-from collections import Counter, defaultdict
-from pprint import pprint
+from collections import defaultdict
 
 
 def mix(a, b):
