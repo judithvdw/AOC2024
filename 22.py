@@ -42,4 +42,5 @@ for buyer in windows_and_prices:
             bananas[window] += price
             seen.add(window)
 
-print(max(bananas.values()))
+print(f'Part 1: {sum(sequence[-1] for sequence in sequences)}')
+print(f'Part 2: {max(bananas.values())}')
